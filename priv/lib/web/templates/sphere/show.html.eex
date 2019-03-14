@@ -1,0 +1,247 @@
+<title>fukuoka.ex | 福岡Elixirコミュニティ</title>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/mediaquery.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<link rel="index" title="fukuoka.ex" href="">
+<link rel="canonical" href="//fukuokaex.fun/">
+<link rel="contents" href="//fukuokaex.fun/sitemap">
+<link rel="shortcut icon" href="/images/favicon.ico">
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.1/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/elixir.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/bash.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/vs2015.min.css">
+
+<!-- ▼ header -->
+<header id="header" role="banner">
+  <h1><a href="/">fukuoka.ex</a></h1>
+
+  <aside class="header_navi">
+    <ul role="navigation">
+<!--
+      <li><i class="fas fa-envelope"></i><i class="fas fa-envelope-open"></i>Elixir導入・開発相談コンサルティングお申込み（福岡限定で2019年開始）</li>
+-->
+    </ul>
+  </aside>
+
+</header>
+<!-- ▲ header -->
+
+
+
+<!-- ▼ nav -->
+<nav id="global-nav">
+  <p><i class="far fa-arrow-alt-circle-left"></i><i class="far fa-arrow-alt-circle-right"></i></p>
+
+  <h2>活動内容</h2>
+  <ul role="navigation">
+    <li><a href="/about" style="color: white;">fukuoka.ex とは</a></li>
+    <li><a href="/media" style="color: white;">メディア紹介事例</a></li>
+<!--
+    <li><a href="paper.html">fukuoka.ex先端研究論文</a></li>
+    <li><a href="member.html">運営チーム</a></li>
+-->
+  </ul>
+
+<!--
+  <h2>fukuoka.ex発OSS</h2>
+  <ul role="navigation">
+    <li>（2018/10/15公開予定）</li>
+-->
+<!--
+    <li><a href="oss.html">fukuoka.ex発 OSSリスト</a></li>
+  </ul>
+-->
+
+<!--
+	<h2>技術コラム</h2>
+	<ul role="navigation">
+		<li>（2018/11公開予定）</li>
+-->
+
+<!--
+  <ul role="navigation">
+    <li><a href="https://qiita.com/search?q=fukuoka.ex">Qiita</a></li>
+    <li><a href="advent.html">アドベントカレンダー</a></li>
+    <li><a href="library.html">おすすめライブラリ</a></li>
+    <li class="global-nav_sns"><a href="https://twitter.com/hashtag/fukuokaex" target="_blank" class="global-nav_sns_tw">Twitter #fukuokaex</a></li>
+  </ul>
+-->
+</nav>
+<!-- ▲ nav -->
+
+
+
+<!-- ▼ main -->
+<div class="main" role="main">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.1/marked.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/elixir.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/scala.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/rust.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/vs2015.min.css">
+
+<script src="https://unpkg.com/vue-material@beta"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.1.0/highlightjs-line-numbers.min.js"></script>
+<style>
+td.hljs-ln-numbers
+{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+	text-align: center;
+	color: #ccc;
+	border-right: 1px solid #CCC;
+	vertical-align: top;
+	padding-right: 5px;
+
+	border: 0px;
+}
+
+td.hljs-ln-code
+{
+	padding-left: 10px !important;
+	border: 0px;
+}
+
+.hljs-subst
+{
+	color: #d69d85;
+}
+
+.hljs-symbol
+{
+	color: #96ccff;
+}
+</style>
+
+<div id="app">
+	<div v-html="convertMarkdownToHtml"></div>
+</div>
+
+<script>
+Vue.use( VueMaterial.default )
+
+var app = new Vue
+( {
+	el: '#app',
+	data: 
+	{
+		path: '', 
+		body: '', 
+	},
+	mounted: function() 
+	{
+		this.path = '<%= @params[ "path" ] %>'
+		this.body = '<%= raw( @params[ "body" ] |> String.replace( "\n", "\\n" ) |> String.replace( "\r\n", "\\r\\n" ) ) %>'
+	}, 
+	computed: 
+	{
+		convertMarkdownToHtml: function() 
+		{
+			const renderer = new marked.Renderer()
+			renderer.code = function ( code, language ) 
+			{
+				hljs.initHighlightingOnLoad()
+				hljs.initLineNumbersOnLoad()
+				highlighted_code = hljs.highlightAuto( code, [ language ] ).value
+				hljs.lineNumbersBlock()
+				return '<pre><code class="' + language + ' hljs">' + highlighted_code + '</code></pre>'
+			}
+
+			marked.setOptions
+			( {
+				sanitize: true, 
+			} )
+			marked_body = marked( this.body, { renderer: renderer } )
+			return marked_body
+		}, 
+	},
+} );
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!-- ▲ main -->
+
+<!-- ▼ footer -->
+<footer role="contentinfo">
+<!--
+  <a id="footer_pagetop" href="#header"><i class="fas fa-angle-up"></i></a>
+-->
+  <div>
+    <a class="footer_logo" href="/">fukuoka.ex</a>
+    <ul>
+<!--
+      <li><a href="sitemap.html"><i class="fas fa-sitemap"></i><i class="fas fa-sitemap"></i>サイトマップ</a></li>
+      <li><i class="fas fa-envelope"></i><i class="fas fa-envelope-open"></i>Elixir導入・開発相談コンサルティングお申込み（福岡限定で2019年開始）</li>
+-->
+    </ul>
+  </div>
+
+	<p>
+		&copy; 2017- <span id="copyright"></span> fukuoka.ex Organization
+	</p>
+
+</footer>
+<!-- ▲ footer -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.3.1.min.js"><\/script>')</script>
+<script src="/js/jquery.common.js"></script>

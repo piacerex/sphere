@@ -1,0 +1,176 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.1/marked.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/elixir.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/scala.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/rust.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/vs2015.min.css">
+
+<script src="https://unpkg.com/vue-material@beta"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.1.0/highlightjs-line-numbers.min.js"></script>
+<style>
+td.hljs-ln-numbers
+{
+	text-align: center;
+	color: #c0c0c0;
+	border-right: 1px solid #c0c0c0;
+	vertical-align: top;
+	padding-right: 5px;
+	border: 0px;
+}
+
+td.hljs-ln-code
+{
+	padding-left: 10px !important;
+	border: 0px;
+}
+
+.hljs-subst
+{
+	color: #d69d85;
+}
+
+.hljs-symbol
+{
+	color: #96ccff;
+}
+
+/*
+html, body
+{
+	height: 100%;
+	position: fixed;
+}
+*/
+</style>
+
+<!--
+<div id="app" style="display: grid; grid-template-rows: 39px 39px 710px 60px; grid-template-columns: 720px 720px;">
+-->
+<div id="app" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 39px calc( 100vh - ( 39px + 60px ) ) 60px;">
+	<div style="display: grid; grid-column: 1 / span 2; grid-row: 1; font-size: 18px; margin: 10px;">
+		<div>
+			<b>Path</b> {{ path }}
+		</div>
+	</div>
+<!--
+	<div style="grid-column: 1 / span 2; grid-row: 2 / 4;">
+		<input type="text" style="font-size: 24px;" value="">
+	</div>
+-->
+	<div style="display: grid; grid-column: 1 / 1; grid-row: 2; border: 1px solid #d0d0d0;">
+		<textarea style="height: 100%; overflow-y: scroll; font-size: 12px;" v-bind:value="body" v-on:input="updateValue"></textarea>
+	</div>
+	<div style="display: grid; grid-column: 2 / 2; grid-row: 2; border: 1px solid #d0d0d0;">
+		<div v-html="convertMarkdownToHtml" style="overflow-y: scroll;"></div>
+	</div>
+	<div style="display: grid; grid-column: 1 / span 2; grid-row: 3; background-color: #e0e0e0; text-align: right; padding: 10px;">
+		<div>
+			<md-button class="md-icon-button md-raised md-accent"><md-icon>delete</md-icon></md-button>
+			<md-button class="md-icon-button md-raised"><md-icon>save_alt</md-icon></md-button>
+			<md-button v-on:click="save" class="md-icon-button md-raised md-primary" v-bind:disabled="save_disabled"><md-icon>publish</md-icon></md-button>
+				<template>
+					<md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+						<span>This column saved and published.</span>
+						<md-button class="md-primary" @click="showSnackbar = false">x</md-button>
+					</md-snackbar>
+				</template>
+			<md-button v-on:click="show" class="md-icon-button md-raised" v-bind:disabled="show_disabled"><md-icon>pageview</md-icon></md-button>
+		</div>
+	</div>
+</div>
+
+<script>
+Vue.use( VueMaterial.default )
+
+var app = new Vue
+( {
+	el: '#app',
+	data: 
+	{
+		path: '', 
+		body: '', 
+
+		save_disabled: false, 
+		show_disabled: false, 
+
+		showSnackbar: false, 
+		position: 'center', 
+		duration: 2000, 
+		isInfinity: false, 
+	},
+	mounted: function() 
+	{
+		this.path = '<%= @params[ "path" ] %>'
+		this.body = '<%= raw( @params[ "body" ] |> String.replace( "\n", "\\n" ) |> String.replace( "\r\n", "\\r\\n" ) ) %>'
+	}, 
+	computed: 
+	{
+		convertMarkdownToHtml: function() 
+		{
+			const renderer = new marked.Renderer()
+			renderer.code = function( code, language ) 
+			{
+				hljs.initHighlightingOnLoad()
+				hljs.initLineNumbersOnLoad()
+				highlighted_code = hljs.highlightAuto( code, [ language ] ).value
+				hljs.lineNumbersBlock()
+				return '<pre><code class="' + language + ' hljs">' + highlighted_code + '</code></pre>'
+			}
+
+			marked.setOptions
+			( {
+				sanitize: true, 
+			} )
+			marked_body = marked( this.body, { renderer: renderer } )
+			return marked_body
+		}, 
+	},
+	methods: 
+	{
+		updateValue: _.debounce
+		( 
+			function( eventObject ) 
+			{
+				this.body = eventObject.target.value
+			}, 
+			500 
+		), 
+		save: async function()
+		{
+			this.save_disabled = true
+			this.show_disabled = true
+
+			this.showSnackbar = false
+			await axios.post( '/api/save', 
+				{ 
+					'post':
+					{
+						'path': this.path, 
+						'body': this.body, 
+					} 
+				} )
+			this.showSnackbar = true
+
+			this.save_disabled = false
+			this.show_disabled = false
+		}, 
+		show: function()
+		{
+			window.location.href = this.path
+		}, 
+	}, 
+} );
+</script>
