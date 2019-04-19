@@ -71,7 +71,7 @@ html, body
 	</div>
 -->
 	<div style="display: grid; grid-column: 1 / 1; grid-row: 2; border: 1px solid #d0d0d0;">
-		<textarea style="height: 100%; overflow-y: scroll; font-size: 12px;" v-bind:value="body" v-on:input="updateValue"></textarea>
+		<textarea style="height: 100%; overflow-y: scroll; font-size: 12px;" v-bind:value="body" @drop.prevent="handleDrop" @paste="handlePaste" v-on:input="updateValue"></textarea>
 	</div>
 	<div style="display: grid; grid-column: 2 / 2; grid-row: 2; border: 1px solid #d0d0d0;">
 		<div v-html="convertMarkdownToHtml" style="overflow-y: scroll;"></div>
@@ -147,7 +147,49 @@ var app = new Vue
 				this.body = eventObject.target.value
 			}, 
 			500 
-		), 
+		),
+		handlePaste: function(e) {
+			var items = e.clipboardData.items;
+			var formData = new FormData();
+			for (var item of items) {
+				if (item.type.match("image.*")) {
+					formData.append("image", item.getAsFile());
+				}
+			}
+			if (formData.has("image")) {
+				this.postImage(formData);
+			}
+		},
+		handleDrop: function(e)
+		{
+			// ファイルがドロップされたときだけ処理する
+			var files = e.dataTransfer.files
+			if (files.length > 0) {
+				var formData = new FormData()
+				for (var file of files) {
+					if (file.type.match('image.*')) {
+						formData.append('image', file)  // 画像のみ追加
+					}
+				}
+
+				if (formData.has("image")) {
+					this.postImage(formData) // 画像をアップロード
+				}
+			}
+		},
+		postImage: async function(formData)
+		{
+			var response = await axios.post( '/api/upload', formData)
+			var textarea = document.querySelector('textarea')
+			var sentence = textarea.value
+			var len = sentence.length
+			var pos = textarea.selectionStart
+			var before = sentence.substr(0, pos)
+			var after = sentence.substr(pos, len)
+			var word = '![image](' + response.data.src + ')'
+			sentence = before + word + after  //  マークダウンを挿入
+			this.body = sentence 
+		}, 
 		save: async function()
 		{
 			this.save_disabled = true
