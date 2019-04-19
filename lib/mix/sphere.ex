@@ -34,6 +34,7 @@ defmodule Mix.Tasks.Sphere.Put do
 		IO.puts """
 			scope "/", SphereWeb do
 				post "/api/save", ApiController, :save
+				post "/api/upload", ApiController, :upload
 			end
 
 			scope "#{ root }#{ relative_path }", SphereWeb do
