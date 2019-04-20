@@ -9,12 +9,12 @@ defmodule Mix.Tasks.Sphere.Put do
 		# elixir_app_module = file_app_module |> Macro.camelize
 
 		[
-			%{ "path" => "lib/#{ file_app_module }_web/templates/sphere/edit.html.eex",				"id" => &edit_html_text/0 }, 
-			%{ "path" => "lib/#{ file_app_module }_web/templates/sphere/show.html.eex",				"id" => &show_html_text/0 }, 
-			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/sphere_controller.ex",	"id" => &sphere_controller_text/0 }, 
-			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/api_controller.ex",		"id" => &api_controller_text/0 }, 
-			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/sphere_view.ex", 				"id" => &sphere_view_text/0 }, 
-			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/api_view.ex", 					"id" => &api_view_text/0 }, 
+			%{ "path" => "lib/#{ file_app_module }_web/templates/sphere/edit.html.eex",				"id" => &edit_html_text/0 },
+			%{ "path" => "lib/#{ file_app_module }_web/templates/sphere/show.html.eex",				"id" => &show_html_text/0 },
+			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/sphere_controller.ex",	"id" => &sphere_controller_text/0 },
+			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/api_controller.ex",		"id" => &api_controller_text/0 },
+			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/sphere_view.ex", 				"id" => &sphere_view_text/0 },
+			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/api_view.ex", 					"id" => &api_view_text/0 },
 		]
 		|> Enum.each( & Mix.Generator.create_file( &1[ "path" ], &1[ "id" ].() ) )
 
@@ -22,13 +22,19 @@ defmodule Mix.Tasks.Sphere.Put do
 		relative_path = "/#{ folder }"
 		pwd = File.cwd!()
 		root = Application.fetch_env!( :sphere, :content_root )
-		absolute_path = "#{ pwd }#{ root }#{ relative_path }"
-		Mix.Generator.create_directory( absolute_path )
+		image_folder = Application.fetch_env!( :sphere, :image_folder )
+		content_absolute_path = "#{ pwd }#{ root }#{ relative_path }"
+		image_absolute_path = "#{pwd}/priv/static/images/#{image_folder}"
+
+		Mix.Generator.create_directory( content_absolute_path )
+		Mix.Generator.create_directory( image_absolute_path )
+
 
 		IO.puts ""
 		IO.puts """
 			scope "/", SphereWeb do
 				post "/api/save", ApiController, :save
+				post "/api/upload", ApiController, :upload
 			end
 
 			scope "#{ root }#{ relative_path }", SphereWeb do
