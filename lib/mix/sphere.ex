@@ -14,7 +14,6 @@ defmodule Mix.Tasks.Sphere.Put do
 			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/sphere_controller.ex",	"id" => &sphere_controller_text/0 },
 			%{ "path" => "lib/#{ file_app_module }_web/controllers/sphere/api_controller.ex",		"id" => &api_controller_text/0 },
 			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/sphere_view.ex", 				"id" => &sphere_view_text/0 },
-			%{ "path" => "lib/#{ file_app_module }_web/views/sphere/api_view.ex", 					"id" => &api_view_text/0 },
 		]
 		|> Enum.each( & Mix.Generator.create_file( &1[ "path" ], &1[ "id" ].() ) )
 
@@ -56,5 +55,4 @@ defmodule Mix.Tasks.Sphere.Put do
 	Mix.Generator.embed_text( :sphere_controller,	from_file: "priv/lib/web/controllers/sphere/sphere_controller.ex" )
 	Mix.Generator.embed_text( :api_controller,		from_file: "priv/lib/web/controllers/sphere/api_controller.ex" )
 	Mix.Generator.embed_text( :sphere_view,			from_file: "priv/lib/web/views/sphere/sphere_view.ex" )
-	Mix.Generator.embed_text( :api_view,			from_file: "priv/lib/web/views/sphere/api_view.ex" )
 end

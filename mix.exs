@@ -4,7 +4,7 @@ defmodule Sphere.MixProject do
   def project do
     [
       app: :sphere,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.8",
 		description: "Markdown based easy CMS for Phoenix(Elixir Web Framework), it's generate Markdown files not using DB.", 
 		package: 

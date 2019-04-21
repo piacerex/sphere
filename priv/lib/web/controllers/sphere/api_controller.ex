@@ -6,7 +6,7 @@ defmodule SphereWeb.ApiController do
 		root = Application.fetch_env!( :sphere, :content_root )
 		absolute_path = "#{ pwd }#{ root }#{ relative_path }"
 		File.write( absolute_path, body )
-		render( conn, "api.json", api_data: params )
+		json( conn, api_data: params )
 	end
 
 	def upload(conn, %{"image" => image}) do
@@ -17,7 +17,7 @@ defmodule SphereWeb.ApiController do
 		absolute_path = "#{pwd}/priv/static/images/#{image_folder}/#{filename}"
 
 		File.cp!(image.path, "#{absolute_path}")
-		render(conn, "api.json", api_data: %{"src" => Routes.static_path(conn, "/images/#{image_folder}/#{filename}")})
+		json( conn, api_data: %{"src" => Routes.static_path(conn, "/images/#{image_folder}/#{filename}")})
 	end
 
 end
