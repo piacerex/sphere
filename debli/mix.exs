@@ -33,6 +33,12 @@ defmodule Basic.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:shotrize, git: "https://github.com/piacerex/shotrize.git", branch: "v1.0"}, 
+      {:smallex, git: "https://github.com/piacerex/smallex.git", branch: "v1.0"},
+      {:git_cli, "~> 0.3"}, 
+
+      {:phx_gen_auth, "~> 0.7"},
+
       {:phoenix, "~> 1.5.9"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},

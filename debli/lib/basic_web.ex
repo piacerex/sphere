@@ -30,6 +30,7 @@ defmodule BasicWeb do
   def view do
     quote do
       use Phoenix.View,
+        pattern: "**/*",
         root: "lib/basic_web/templates",
         namespace: BasicWeb
 
