@@ -10,6 +10,23 @@ defmodule BasicWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :sphere_browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, false
+#    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+#    plug :fetch_current_user
+  end
+
+  scope "/sphere/", BasicWeb do
+    pipe_through :sphere_browser
+#    pipe_through [ :sphere_browser, :require_authenticated_user ]
+
+    get "/edit/*path_", SphereController, :edit
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -26,6 +43,12 @@ defmodule BasicWeb.Router do
   scope "/api/", BasicWeb do
     pipe_through :api
 
+get    "/file/list",        FileController, :list
+post   "/file/upload",      FileController, :upload
+put    "/file/new_file",    FileController, :new_file
+put    "/file/new_folder",  FileController, :new_folder
+delete "/file/remove",      FileController, :remove
+
     get "/*path_", ApiController, :index
     post "/*path_", ApiController, :index
     put "/*path_", ApiController, :index
@@ -33,11 +56,14 @@ defmodule BasicWeb.Router do
   end
 
   scope "/", BasicWeb do
-    pipe_through :browser
+#    pipe_through :browser
+    pipe_through :sphere_browser
 
-    live "/", PageLive, :index
-    get "/*path_", PageController, :index
-    post "/*path_", PageController, :index
+#    live "/", PageLive, :index
+#    get "/*path_", PageController, :index
+#    post "/*path_", PageController, :index
+    get  "/*path_", SphereController, :index
+    post "/*path_", SphereController, :index
   end
 
   # Other scopes may use custom stacks.

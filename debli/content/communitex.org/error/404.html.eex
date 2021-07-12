@@ -1,0 +1,34 @@
+<!--
+Title: 
+CreateDate: 2021/04/11 09:47:47.825356
+Creator: m-mori@digi-dock.com
+UpdateDate: 2021/07/12 15:24:45
+Updater: nobody
+-->
+
+<section class="page-visual">
+    <div class="page-visual__inner">
+        <div class="page-visual-title-unit">
+            <h2 class="page-visual-title-unit__title">お探しのページが見つかりません</h2>
+            <p class="page-visual-title-unit__lead">404 Not Found</p>
+        </div>
+    </div>
+</section>
+
+<div class="main">
+    <div class="page-content-container">
+        <div class="box01">
+            <div class="box01__content">
+                <div class="text-unit">
+                    <p class="text-center">
+                        アクセスしようしたページは、現在、存在していません。<br>
+                        下記からトップページに戻り、ご希望のページにアクセスしてください。<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group-center">
+            <v-btn rounded large color="indigo darken-4" dark elevation="2" class="mb0" href="/">トップページに戻る</v-btn>
+        </div>
+    </div>
+</div>

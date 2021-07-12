@@ -104,16 +104,47 @@ var app = new Vue
 	vuetify: new Vuetify(),
 	data: 
 	{
-		current_user: 
-		{
-			email: '<%= if @current_user != nil, do: @current_user.email, else: "" %>', 
-		}, 
+		path:			'<%= @params[ "path" ] %>', 
+		title:			'<%= @params[ "title" ] %>', 
+		create_date:	'<%= @params[ "create_date" ] %>', 
+		creator:		'<%= @params[ "creator" ] %>', 
+		updater:		'<%= @params[ "updater" ] %>', 
+		raw:			<%= @params[ "raw" ] %>, 
+
+		body:	'<%= raw( @params[ "body" ] |> String.replace( "\r\n", "\\r\\n" ) |> String.replace( "\n", "\\n" ) |> String.replace( "'", "\\'" ) ) %>', 
 	},
 	mounted: function() 
 	{
 	}, 
 	computed: 
 	{
+		convertMarkdownToHtml: function() 
+		{
+			if ( this.raw != true )
+			{
+				const renderer = new marked.Renderer()
+				renderer.code = function( code, language ) 
+				{
+					hljs.initHighlightingOnLoad()
+					hljs.initLineNumbersOnLoad()
+					highlighted_code = hljs.highlightAuto( code, [ language ] ).value
+					hljs.lineNumbersBlock()
+					return '<pre><code class="' + language + ' hljs">' + highlighted_code + '</code></pre>'
+				}
+
+				marked.setOptions
+				( {
+					sanitize: true, 
+				} )
+				title = this.title != '' ? '# ' + this.title + '\r\n' : ''
+				marked_body = marked( title + this.body, { renderer: renderer } )
+				return marked_body
+			}
+			else
+			{
+				return this.body
+			}
+		}, 
 	}, 
 } )
 </script>
