@@ -56,13 +56,24 @@ delete "/file/remove",      FileController, :remove
   end
 
   scope "/", BasicWeb do
-#    pipe_through :browser
-    pipe_through :sphere_browser
+    pipe_through :browser
+
+    live "/grants", GrantLive.Index, :index
+    live "/grants/new", GrantLive.Index, :new
+    live "/grants/:id/edit", GrantLive.Index, :edit
+
+    live "/grants/:id", GrantLive.Show, :show
+    live "/grants/:id/show/edit", GrantLive.Show, :edit
 
 #    live "/", PageLive, :index
 #    get "/*path_", PageController, :index
 #    post "/*path_", PageController, :index
-    get  "/*path_", SphereController, :index
+  end
+
+  scope "/", BasicWeb do
+    pipe_through :sphere_browser
+
+    get "/*path_",  SphereController, :index
     post "/*path_", SphereController, :index
   end
 

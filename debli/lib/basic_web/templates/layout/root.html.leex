@@ -81,11 +81,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 <!-- ヘッダーここまで -->
 
-<%= if Path.extname( @params[ "path" ] ) != ".md" do %>
-	<%= raw( @params[ "body" ] ) %>
-<% else %>
-	<div class="main" v-html="convertMarkdownToHtml"></div>
-<% end %>
+<%= @inner_content %>
 
 <!-- フッターここから -->
 <div id="footer" class="footer">
@@ -104,10 +100,6 @@ var app = new Vue
 	vuetify: new Vuetify(),
 	data: 
 	{
-		current_user: 
-		{
-			email: '<%= if @current_user != nil, do: @current_user.email, else: "" %>', 
-		}, 
 	},
 	mounted: function() 
 	{
